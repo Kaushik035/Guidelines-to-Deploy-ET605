@@ -516,10 +516,39 @@ If session_status == "completed" → questions_attempted must equal total_questi
     ]
   }
 }
+When a student's performance is weak, the recommendation.type will be "prerequisite" and the response will include a prerequisite_url field pointing to the chapter they should revisit:
+
+
+{
+  "student_id": "STD-42",
+  "chapter_id": "grade6_fractions",
+  "performance_score": 0.31,
+  "confidence_score": 0.48,
+  "learning_state": "weak",
+  "diagnosis": {
+    "accuracy": 0.30,
+    "hint_dependency": "high",
+    "retry_behavior": "high",
+    "time_efficiency": "low",
+    "history": {
+      "past_attempts": 0,
+      "trend": "new"
+    }
+  },
+  "recommendation": {
+    "type": "prerequisite",
+    "reason": "Low performance indicates foundational gaps.",
+    "next_steps": [
+      "Revisit prerequisite chapter: grade5_fractions",
+      "Complete guided revision before retrying this chapter."
+    ],
+    "prerequisite_url": "https://grade6-fractions.kaushik-dev.online"
+  }
+}
 ```
+Note: prerequisite_url is only present when recommendation.type === "prerequisite" and the prerequisite chapter is hosted on our server. Always check for its existence before using it.
 
 Display this recommendation to the student so they know what to do next.
-
 ### 8.6 — Complete Code Examples
 
 **Node.js (Express) — Full integration:**
